@@ -7,52 +7,26 @@
 
 
 
-  <div class="hand grow">
+<div class="hand grow">
+  <% @flop.each do |f| %>
+    <div class="card suit<%=  f["suit"] %>">
+      <p><%= f["number"]%></p>
+    </div>  
+  <% end %>
+</div>
 
-    <div class="card suitdiamonds">
-      <p>A</p>
-    </div>
+<div class="hand grow inline">
+  <% @hand_one.each do |f| %>
+    <div class="card suit<%=  f["suit"] %>">
+      <p><%= f["number"]%></p>
+    </div>  
+  <% end %>
+</div>
 
-    <div class="card suithearts">
-      <p>A</p>
-    </div>
-    
-    <div class="card suitclubs">
-      <p>A</p>
-    </div>
-    
-    <div class="card suitspades">
-      <p>A</p>
-    </div>
-
-    <div class="card suitspades">
-      <p>A</p>
-    </div>
-
-  </div>
-
-
-    <div class="hand grow">
-
-    <div class="card suitdiamonds">
-      <p>A</p>
-    </div>
-
-    <div class="card suithearts">
-      <p>A</p>
-    </div>
-
-
-  </div>
-
-  <div class="hand grow">
-
-    <div class="card suitdiamonds">
-      <p>A</p>
-    </div>
-
-    <div class="card suithearts">
-      <p>A</p>
-    </div>
-    
-  </div>
+<div class="hand grow inline">
+  <% @hand_two.each do |f| %>
+    <div class="card suit<%=  f["suit"] %>">
+      <p><%= f["number"]%></p>
+    </div>  
+  <% end %>
+</div>
