@@ -1,7 +1,58 @@
 <h1>Deck</h1>
 <h1>Session: <%= @token %></h1>
-<script src="https://deck-of-cards.js.org/dist/deck.min.js"></script>
-<link rel="stylesheet" href="https://deck-of-cards.js.org/example.css">
 
-<div id="container"></div>
 
+<%= javascript_include_tag "deck" %>
+<%= stylesheet_link_tag "deck", :media => 'screen' %>
+
+
+
+  <div class="hand grow">
+
+    <div class="card suitdiamonds">
+      <p>A</p>
+    </div>
+
+    <div class="card suithearts">
+      <p>A</p>
+    </div>
+    
+    <div class="card suitclubs">
+      <p>A</p>
+    </div>
+    
+    <div class="card suitspades">
+      <p>A</p>
+    </div>
+
+    <div class="card suitspades">
+      <p>A</p>
+    </div>
+
+  </div>
+
+
+    <div class="hand grow">
+
+    <div class="card suitdiamonds">
+      <p>A</p>
+    </div>
+
+    <div class="card suithearts">
+      <p>A</p>
+    </div>
+
+
+  </div>
+
+  <div class="hand grow">
+
+    <div class="card suitdiamonds">
+      <p>A</p>
+    </div>
+
+    <div class="card suithearts">
+      <p>A</p>
+    </div>
+    
+  </div>
