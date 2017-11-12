@@ -9,7 +9,11 @@
 
 <% unless @out_of_hands %>
   <%= link_to "New Hand", new_hands_path(@token), html_options = {class: "btn"} %>
-  <p>Mano ganadora <%= @winner_hand %> con <%= @winner_hand_name %></p>
+  <% if @winner_hand == 0%>
+    <p>Is a Tie with <%= @winner_hand_name %>!!</p>
+  <% else %>
+    <p>Winner Hand <%= @winner_hand %>!! with <%= @winner_hand_name %></p>
+  <% end %>
 
   <div class="hands">
     <h2>Mano 1</h2>

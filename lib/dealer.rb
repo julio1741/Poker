@@ -21,7 +21,8 @@ class Dealer
     rank2 = rank(hand2)
 
     if rank1.last == rank2.last
-      tie = tie_break(rank1.last, hand1, hand2) 
+      tie = tie_break(rank1, hand1, hand2) 
+      return [0,rank1.first] if tie == 0
       return tie == 1 ? [1,rank1.first] : [2,rank2.first]
     else
       return rank1.last > rank2.last ? [1,rank1.first] : [2,rank2.first]
@@ -29,12 +30,48 @@ class Dealer
   end
 
   def tie_break rank, hand1, hand2
-    if rank == 0
+    if rank.last == 0
        tie_high_card hand1, hand2
     else
-      #call others ties
+      begin
+        send("tie_#{rank.first.to_s}",hand1,hand2)
+      rescue
+        return 0
+      end
     end
   end
+
+  def tie_pair hand1, hand2
+    numbers1 = hand1.map{|h| h["number"]}
+    numbers2 = hand2.map{|h| h["number"]}
+    high1 = numbers1.group_by {|e| e}.map { |e| e[0] if e[1][1]}.compact.map{|e| CARDS[1..-1].index(e)}.sort.reverse.first
+    high2 = numbers2.group_by {|e| e}.map { |e| e[0] if e[1][1]}.compact.map{|e| CARDS[1..-1].index(e)}.sort.reverse.first
+    high1 > high2 ? 1 : 2
+  end
+
+  # def tie_two_pair hand1, hand2
+  # end
+
+  # def tie_three_of_a_kind hand1, hand2
+  # end
+
+  # def tie_straight hand1, hand2
+  # end
+
+  # def tie_flush hand1, hand2
+  # end
+
+  # def tie_full_house hand1, hand2
+  # end
+
+  # def tie_four_of_a_kind hand1, hand2
+  # end
+
+  # def tie_straight_flush hand1, hand2
+  # end
+
+  # def tie_royal_flush hand1, hand2
+  # end
 
   def tie_high_card hand1, hand2
     numbers1 = hand1.map{|h| CARDS_VALUE[CARDS[1..-1].index(h["number"])] }.sort.reverse
