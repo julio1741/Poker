@@ -6,16 +6,7 @@
 <%= stylesheet_link_tag "deck", :media => 'screen' %>
 
 
-
-<div class="hand grow">
-  <% @flop.each do |f| %>
-    <div class="card suit<%=  f["suit"] %>">
-      <p><%= f["number"]%></p>
-    </div>  
-  <% end %>
-</div>
-
-<div class="hand grow inline">
+<div class="hand grow ">
   <% @hand_one.each do |f| %>
     <div class="card suit<%=  f["suit"] %>">
       <p><%= f["number"]%></p>
@@ -23,7 +14,7 @@
   <% end %>
 </div>
 
-<div class="hand grow inline">
+<div class="hand grow ">
   <% @hand_two.each do |f| %>
     <div class="card suit<%=  f["suit"] %>">
       <p><%= f["number"]%></p>
