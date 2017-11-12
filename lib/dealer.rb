@@ -1,6 +1,6 @@
 require 'rest-client'
 class Dealer
-  CARDS = ['A','1','2','3','4','5','6','7','8','9','10','J','Q','K','A']
+  CARDS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K','A']
   CARDS_VALUE = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
   STRAIGHTS = CARDS.each_cons(5).map(&:to_a)
  
@@ -19,7 +19,31 @@ class Dealer
   def winner_hand hand1, hand2,
     rank1 = rank(hand1)
     rank2 = rank(hand2)
-    rank1.last > rank2.last ? [1,rank1.first] : [2,rank2.first]
+
+    if rank1.last == rank2.last
+      tie = tie_break(rank1.last, hand1, hand2) 
+      return tie == 1 ? [1,rank1.first] : [2,rank2.first]
+    else
+      return rank1.last > rank2.last ? [1,rank1.first] : [2,rank2.first]
+    end
+  end
+
+  def tie_break rank, hand1, hand2
+    if rank == 0
+       tie_high_card hand1, hand2
+    else
+      #call others ties
+    end
+  end
+
+  def tie_high_card hand1, hand2
+    numbers1 = hand1.map{|h| CARDS_VALUE[CARDS[1..-1].index(h["number"])] }.sort
+    numbers2 = hand2.map{|h| CARDS_VALUE[CARDS[1..-1].index(h["number"])] }.sort
+    0.upto(4) do |i|
+      next if numbers1[i] == numbers2[i]
+      return (numbers1[i] > numbers2[i] ? 1 : 2)
+    end
+    return 0
   end
 
   def rank hand
