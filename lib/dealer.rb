@@ -42,19 +42,23 @@ class Dealer
   def get_cards token, num
     result = nil
     code = 0
-    while result.nil? and code != 405
+    while result.nil? and code != 405 and code != 404
       begin
         result = RestClient.get "https://services.comparaonline.com/dealer/deck/#{token}/deal/#{num}"
         return JSON.parse(result.body)
       rescue RestClient::ExceptionWithResponse => e
-        # error = JSON.parse(e.response)
-        # code = error["statusCode"]
-        # error = error["error"]
-        # msg = error["message"]
-        # puts "#log: #{code} #{error} #{msg}"
+        begin
+          error = JSON.parse(e.response)
+          code = error["statusCode"]
+          error = error["error"]
+          msg = error["message"]
+          puts "#log: #{code} #{error} #{msg}"
+        rescue
+          puts "Json response problem"
+        end
       end 
     end
-    return false
+    return code
   end
 
   def high_card hand
@@ -65,11 +69,6 @@ class Dealer
 
   def pair? hand
     numbers = hand.map{|h| h["number"]}
-    # if numbers.size == numbers.uniq.size
-    #   return false
-    # else
-    #   return true
-    # end
     not numbers.size == numbers.uniq.size
   end
 

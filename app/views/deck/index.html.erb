@@ -5,22 +5,32 @@
 <%= javascript_include_tag "deck" %>
 <%= stylesheet_link_tag "deck", :media => 'screen' %>
 
-<p>Mano ganadora <%= @winner_hand %> con <%= @winner_hand_name %></p>
+<%= link_to "New Deck", deck_index_path %>
 
-<h2>Mano 1</h2>
-<div class="hand grow ">
-  <% @hand_one.each do |f| %>
-    <div class="card suit<%=  f["suit"] %>">
-      <p><%= f["number"]%></p>
-    </div>  
-  <% end %>
-</div>
-<h2>Mano 2</h2>
-<div class="hand grow ">
-  <% @hand_two.each do |f| %>
-    <div class="card suit<%=  f["suit"] %>">
-      <p><%= f["number"]%></p>
-    </div>  
-  <% end %>
-</div>
+<% unless @out_of_hands %>
+  <%= link_to "New Hand", new_hands_path(@token) %>
+  <p>Mano ganadora <%= @winner_hand %> con <%= @winner_hand_name %></p>
+
+  <div class="hands">
+    <h2>Mano 1</h2>
+    <div class="hand grow ">
+      <% @hand_one.each do |f| %>
+        <div class="card suit<%=  f["suit"] %>">
+          <p><%= f["number"]%></p>
+        </div>  
+      <% end %>
+    </div>
+    <h2>Mano 2</h2>
+    <div class="hand grow ">
+      <% @hand_two.each do |f| %>
+        <div class="card suit<%=  f["suit"] %>">
+          <p><%= f["number"]%></p>
+        </div>  
+      <% end %>
+    </div>
+  </div>
+
+<% else %>
+  <%= @out_of_hands %>
+<% end %>
 
