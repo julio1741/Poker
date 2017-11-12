@@ -4,7 +4,28 @@ class Dealer
   CARDS_VALUE = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
   STRAIGHTS = CARDS.each_cons(5).map(&:to_a)
  
- 
+  RANKS = {
+    royal_flush:     9,
+    straight_flush:  8,
+    four_of_a_kind:  7,
+    full_house:      6,
+    flush:           5,
+    straight:        4,
+    three_of_a_kind: 3,
+    two_pair:        2,
+    pair:            1
+  }.freeze
+
+  def winner_hand hand1, hand2,
+    rank1 = rank(hand1).last
+    rank2 = rank(hand2).last
+    rank1 > rank2 ? 1 : 2
+  end
+
+  def rank hand
+    RANKS.detect { |method, rank| send("#{method}?", hand) } || [:high_card, 0]
+  end
+
   def get_token
     result = nil
 
@@ -42,7 +63,7 @@ class Dealer
     CARDS[1..-1][max_index]
   end
 
-  def one_pair? hand
+  def pair? hand
     numbers = hand.map{|h| h["number"]}
     # if numbers.size == numbers.uniq.size
     #   return false
@@ -75,19 +96,19 @@ class Dealer
     suits.uniq.count == 1
   end
 
-  def full_house? hand
-    one_pair?(hand) and three_of_a_kind?(hand)
+  def full_house? hand #fix
+    pair?(hand) and three_of_a_kind?(hand)
   end
 
   def four_of_a_kind? hand
     numbers = hand.map{|h| h["number"]}
     freq = numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
     max_freq = freq.to_a.max_by(&:last)
-    max_freq.last == 3
+    max_freq.last == 4
   end
 
   def straight_flush? hand
-    straight? and flush?
+    straight?(hand) and flush?(hand)
   end
 
   def royal_flush? hand 
@@ -99,7 +120,7 @@ class Dealer
     STRAIGHTS
   end
   
-  def get_cards
+  def get_card_numbers
     CARDS
   end
 
