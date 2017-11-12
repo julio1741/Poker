@@ -5,7 +5,7 @@
 <%= javascript_include_tag "deck" %>
 <%= stylesheet_link_tag "deck", :media => 'screen' %>
 
-<%= link_to "New Deck", deck_index_path, html_options = {class: "btn"} %>
+<%= link_to "New Deck", root_path, html_options = {class: "btn"} %>
 
 <% unless @out_of_hands %>
   <%= link_to "New Hand", new_hands_path(@token), html_options = {class: "btn"} %>
