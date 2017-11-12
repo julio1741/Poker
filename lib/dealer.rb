@@ -37,8 +37,8 @@ class Dealer
   end
 
   def tie_high_card hand1, hand2
-    numbers1 = hand1.map{|h| CARDS_VALUE[CARDS[1..-1].index(h["number"])] }.sort
-    numbers2 = hand2.map{|h| CARDS_VALUE[CARDS[1..-1].index(h["number"])] }.sort
+    numbers1 = hand1.map{|h| CARDS_VALUE[CARDS[1..-1].index(h["number"])] }.sort.reverse
+    numbers2 = hand2.map{|h| CARDS_VALUE[CARDS[1..-1].index(h["number"])] }.sort.reverse
     0.upto(4) do |i|
       next if numbers1[i] == numbers2[i]
       return (numbers1[i] > numbers2[i] ? 1 : 2)
