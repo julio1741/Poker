@@ -5,7 +5,9 @@
 <%= javascript_include_tag "deck" %>
 <%= stylesheet_link_tag "deck", :media => 'screen' %>
 
+<p>Mano ganadora <%= @winner_hand %> con <%= @winner_hand_name %></p>
 
+<h2>Mano 1</h2>
 <div class="hand grow ">
   <% @hand_one.each do |f| %>
     <div class="card suit<%=  f["suit"] %>">
@@ -13,7 +15,7 @@
     </div>  
   <% end %>
 </div>
-
+<h2>Mano 2</h2>
 <div class="hand grow ">
   <% @hand_two.each do |f| %>
     <div class="card suit<%=  f["suit"] %>">
@@ -21,3 +23,4 @@
     </div>  
   <% end %>
 </div>
+

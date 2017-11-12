@@ -17,9 +17,9 @@ class Dealer
   }.freeze
 
   def winner_hand hand1, hand2,
-    rank1 = rank(hand1).last
-    rank2 = rank(hand2).last
-    rank1 > rank2 ? 1 : 2
+    rank1 = rank(hand1)
+    rank2 = rank(hand2)
+    rank1.last > rank2.last ? [1,rank1.first] : [2,rank2.first]
   end
 
   def rank hand
