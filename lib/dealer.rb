@@ -95,8 +95,14 @@ class Dealer
     suits.uniq.count == 1
   end
 
-  def full_house? hand #fix
-    pair?(hand) and three_of_a_kind?(hand)
+  def full_house? hand
+    numbers = hand.map{|h| h["number"]}
+    freq = numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    freq_array = freq.to_a
+    sorted = freq_array.sort {|a,b| a[1] <=> b[1]}
+    a = sorted.pop.last
+    b = sorted.pop.last
+    a == 3 and b == 2 
   end
 
   def four_of_a_kind? hand
