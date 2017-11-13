@@ -7,6 +7,7 @@ Still missing to validate the ties between some plays, trio, straight, flush, fu
 
 I did the project very structured, I would like to improve it.
 
+The design of the app is not very pretty, I lacked time to make it look better.
 
 The application I upload to heroku and can try it on:
 
