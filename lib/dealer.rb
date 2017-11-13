@@ -2,19 +2,6 @@ require 'rest-client'
 class Dealer
   CARDS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K','A']
   CARDS_VALUE = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-  STRAIGHTS = CARDS.each_cons(5).map(&:to_a)
- 
-  RANKS = {
-    royal_flush:     9,
-    straight_flush:  8,
-    four_of_a_kind:  7,
-    full_house:      6,
-    flush:           5,
-    straight:        4,
-    three_of_a_kind: 3,
-    two_pair:        2,
-    pair:            1
-  }.freeze
 
   def winner_hand hand1, hand2,
     h1 = Hand.new(hand1)
