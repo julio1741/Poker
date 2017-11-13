@@ -7,9 +7,18 @@ Still missing to validate the ties between some plays, trio, straight, flush, fu
 
 I did the project very structured, I would like to improve it.
 
-The repository is available in:
-https://github.com/julio1741/Poker
 
 The application I upload to heroku and can try it on:
 
 https://comparaonlinepoker.herokuapp.com/
+
+The application has two buttons:
+
+New Deck:
+Restart the deck session.
+
+New hand:
+Deal 2 hands more, saying at once the winning hand.
+
+If the deck is left without cards, it warns.
+Or if the session expires he notifies.
