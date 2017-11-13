@@ -14,12 +14,6 @@ class Hand
     two_pair:        2,
     pair:            1
   }.freeze
-
-  [{"number"=>"K", "suit"=>"diamonds"}, 
-  {"number"=>"J", "suit"=>"spades"}, 
-  {"number"=>"5", "suit"=>"diamonds"}, 
-  {"number"=>"5", "suit"=>"clubs"}, 
-  {"number"=>"9", "suit"=>"diamonds"}]
   
   def initialize array
     @cards = array.map{|data| Card.new(data["suit"],data["number"])}
@@ -54,7 +48,7 @@ class Hand
   end
 
   def straight?
-    numbers = get_numbers
+    numbers = get_numbers_sorted
     get_straight.include? numbers
   end
 
@@ -101,6 +95,12 @@ class Hand
 
     def get_suits
       @cards.map{|c| c.suit}
+    end
+
+    def get_numbers_sorted
+      values = get_numbers.map{|v| Card::CARDS_VALUES[v]  }
+      sorted = values.sort.map{|v| Card::CARDS_VALUES.key(v)  }
+      sorted
     end
 
 end

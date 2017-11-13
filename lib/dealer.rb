@@ -3,15 +3,15 @@ class Dealer
   CARDS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K','A']
   CARDS_VALUE = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 
-  def winner_hand hand1, hand2,
-    h1 = Hand.new(hand1)
-    h2 = Hand.new(hand2)
+  def winner_hand data_hand1, data_hand2,
+    hand1 = Hand.new(data_hand1)
+    hand2 = Hand.new(data_hand2)
 
-    rank1 = h1.rank
-    rank2 = h2.rank
+    rank1 = hand1.rank
+    rank2 = hand2.rank
 
     if rank1.last == rank2.last
-      tie = tie_break(rank1, hand1, hand2) 
+      tie = tie_break(rank1, data_hand1, data_hand2) 
       return [0,rank1.first] if tie == 0
       return tie == 1 ? [1,rank1.first] : [2,rank2.first]
     else
@@ -32,8 +32,8 @@ class Dealer
   end
 
   def tie_pair hand1, hand2
-    numbers1 = hand1.map{|h| h["number"]}
-    numbers2 = hand2.map{|h| h["number"]}
+    numbers1 = hand1.get_numbers
+    numbers2 = hand2.get_numbers
     high1 = numbers1.group_by {|e| e}.map { |e| e[0] if e[1][1]}.compact.map{|e| CARDS[1..-1].index(e)}.sort.reverse.first
     high2 = numbers2.group_by {|e| e}.map { |e| e[0] if e[1][1]}.compact.map{|e| CARDS[1..-1].index(e)}.sort.reverse.first
     high1 > high2 ? 1 : 2
