@@ -17,8 +17,11 @@ class Dealer
   }.freeze
 
   def winner_hand hand1, hand2,
-    rank1 = rank(hand1)
-    rank2 = rank(hand2)
+    h1 = Hand.new(hand1)
+    h2 = Hand.new(hand2)
+
+    rank1 = h1.rank
+    rank2 = h2.rank
 
     if rank1.last == rank2.last
       tie = tie_break(rank1, hand1, hand2) 
@@ -83,10 +86,6 @@ class Dealer
     return 0
   end
 
-  def rank hand
-    RANKS.detect { |method, rank| send("#{method}?", hand) } || [:high_card, 0]
-  end
-
   def get_token
     result = nil
 
@@ -120,74 +119,6 @@ class Dealer
       end 
     end
     return code
-  end
-
-  def high_card hand
-    numbers = hand.map{|h| h["number"]}
-    max_index = numbers.map{|n| CARDS[1..-1].index(n)}.max
-    CARDS[1..-1][max_index]
-  end
-
-  def pair? hand
-    numbers = hand.map{|h| h["number"]}
-    not numbers.size == numbers.uniq.size
-  end
-
-  def two_pair? hand
-    numbers = hand.map{|h| h["number"]}
-    repeated = numbers.group_by {|e| e}.map { |e| e[0] if e[1][1]}.compact
-    repeated.size == 2
-  end
-
-  def three_of_a_kind? hand
-    numbers = hand.map{|h| h["number"]}
-    freq = numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    max_freq = freq.to_a.max_by(&:last)
-    max_freq.last == 3
-  end
-
-  def straight? hand
-    numbers = hand.map{|h| h["number"]}.map(&:to_s)
-    get_straight.include? numbers
-  end
-
-  def flush? hand
-    suits = hand.map{|h| h["suit"]}
-    suits.uniq.count == 1
-  end
-
-  def full_house? hand
-    numbers = hand.map{|h| h["number"]}
-    freq = numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    freq_array = freq.to_a
-    sorted = freq_array.sort {|a,b| a[1] <=> b[1]}
-    a = sorted.pop.last
-    b = sorted.pop.last
-    a == 3 and b == 2 
-  end
-
-  def four_of_a_kind? hand
-    numbers = hand.map{|h| h["number"]}
-    freq = numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    max_freq = freq.to_a.max_by(&:last)
-    max_freq.last == 4
-  end
-
-  def straight_flush? hand
-    straight?(hand) and flush?(hand)
-  end
-
-  def royal_flush? hand 
-    numbers = hand.map{|h| h["number"]}.map(&:to_s)
-    numbers.sort == STRAIGHTS.last.sort and flush?
-  end
-
-  def get_straight
-    STRAIGHTS
-  end
-  
-  def get_card_numbers
-    CARDS
   end
 
 end
